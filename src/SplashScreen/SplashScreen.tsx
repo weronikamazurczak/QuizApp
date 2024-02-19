@@ -1,16 +1,33 @@
-import { View, Text } from "react-native";
-import React, { useEffect } from "react";
+import { View, Text, TextComponent } from "react-native";
+import React, { useEffect, useState } from "react";
 import { NavigationType } from "../TypeDeclaration/navigationType";
+import { loadCustomFont } from "./LoadCustomFont";
+import { style } from "../Styles/SplashScreenStyle";
+import { QuizNameText } from "../GlobalComponents/TextComponent";
 
 export default function SplashScreen({ navigation }: NavigationType) {
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate("StartScreen");
-    }, 50000);
-  }, []);
+    (async () => {
+      setIsFontLoaded(await loadCustomFont());
+
+      isFontLoaded
+        ? setTimeout(() => {
+            navigation.navigate("StartScreen");
+          }, 5000)
+        : null;
+    })();
+  }, [isFontLoaded]);
   return (
-    <View className="flex-1 items-center justify-center bg-red-300">
-      <Text className="text-2xl font-bold">SplashScreen</Text>
-    </View>
+    <>
+      {isFontLoaded ? (
+        <View style={style.container}>
+          <QuizNameText />
+        </View>
+      ) : (
+        <></>
+      )}
+    </>
   );
 }
