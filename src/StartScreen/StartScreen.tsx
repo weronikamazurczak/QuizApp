@@ -1,27 +1,38 @@
 import { View, Text, Touchable, TouchableOpacity } from "react-native";
 import React from "react";
-import { Image } from "@gluestack-ui/themed";
-import { style } from "../Styles/StartScreen";
 import { NavigationType } from "../TypeDeclaration/navigationType";
+import ImageAnimation from "./ImageAnimation";
+import BackgroundAnimation from "./BackgroundAnimation";
 
 export default function StartScreen({ navigation }: NavigationType) {
   return (
-    <View style={style.container}>
-      <Image
-        style={style.image}
-        source={require("../../assets/images/logo.jpg")}
-        alt="Odyssey"
-      />
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <BackgroundAnimation />
+      <ImageAnimation />
       <TouchableOpacity
         disabled={false}
         onPress={() => {
           navigation.navigate("DetailsQuestion");
         }}
-        style={style.btnStart}
+        style={{ width: "90%", height: 100 }}
       >
-        <View>
-          <Text style={{ fontSize: 80, fontFamily: "KeaniaOne-Regular" }}>
-            START
+        <View
+          style={{
+            height: 90,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+            borderRadius: 20,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 50,
+              fontFamily: "QuartzoBold-W9lv",
+              textAlign: "center",
+            }}
+          >
+            START GAME
           </Text>
         </View>
       </TouchableOpacity>

@@ -13,17 +13,15 @@ export const style = StyleSheet.create({
     position: "absolute",
     resizeMode: "cover",
     justifyContent: "center",
-    width: "100%",
-    height: "100%",
+    width: "40%",
+    height: "40%",
+    padding:200
   },
   btnStart: {
-    width: "80%",
-    height: "10%",
-    color: "red",
-    textAlign: "center",
-    justifyContent: "center",
+    width: "100%",
+    height: "30%",
     backgroundColor: "transparent",
-    alignItems: "center",
-    marginTop: "176%",
+    marginTop: "10%",
   },
+
 });
