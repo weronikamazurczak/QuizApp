@@ -15,13 +15,22 @@ export const style = StyleSheet.create({
     justifyContent: "center",
     width: "40%",
     height: "40%",
-    padding:200
+    padding: 200,
   },
-  btnStart: {
-    width: "100%",
-    height: "30%",
-    backgroundColor: "transparent",
-    marginTop: "10%",
+  touchableContainer: {
+    width: "90%",
+    height: 100,
   },
-
+  viewContainer: {
+    height: 90,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 20,
+  },
+  textStyle: {
+    fontSize: 50,
+    fontFamily: "QuartzoBold-W9lv",
+    textAlign: "center",
+  },
 });

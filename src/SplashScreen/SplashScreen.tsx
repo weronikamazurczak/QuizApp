@@ -1,9 +1,9 @@
-import { View, Text, TextComponent } from "react-native";
+import { View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NavigationType } from "../TypeDeclaration/navigationType";
 import { loadCustomFont } from "./LoadCustomFont";
 import { style } from "../Styles/SplashScreenStyle";
-import { QuizNameText } from "../GlobalComponents/TextComponent";
+import LogoAnimation from "./LogoAnimation";
 
 export default function SplashScreen({ navigation }: NavigationType) {
   const [isFontLoaded, setIsFontLoaded] = useState(false);
@@ -23,7 +23,7 @@ export default function SplashScreen({ navigation }: NavigationType) {
     <>
       {isFontLoaded ? (
         <View style={style.container}>
-          <QuizNameText />
+          <LogoAnimation />
         </View>
       ) : (
         <></>

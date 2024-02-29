@@ -1,12 +1,14 @@
-import { View, Text, Touchable, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import { NavigationType } from "../TypeDeclaration/navigationType";
 import ImageAnimation from "./ImageAnimation";
 import BackgroundAnimation from "./BackgroundAnimation";
+import * as Animatable from "react-native-animatable";
+import { style } from "../Styles/StartScreen";
 
 export default function StartScreen({ navigation }: NavigationType) {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={style.container}>
       <BackgroundAnimation />
       <ImageAnimation />
       <TouchableOpacity
@@ -14,27 +16,16 @@ export default function StartScreen({ navigation }: NavigationType) {
         onPress={() => {
           navigation.navigate("DetailsQuestion");
         }}
-        style={{ width: "90%", height: 100 }}
+        style={style.touchableContainer}
       >
-        <View
-          style={{
-            height: 90,
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "white",
-            borderRadius: 20,
-          }}
+        <Animatable.View
+          animation="tada"
+          iterationCount="infinite"
+          direction="alternate"
+          style={style.viewContainer}
         >
-          <Text
-            style={{
-              fontSize: 50,
-              fontFamily: "QuartzoBold-W9lv",
-              textAlign: "center",
-            }}
-          >
-            START GAME
-          </Text>
-        </View>
+          <Text style={style.textStyle}>START GAME</Text>
+        </Animatable.View>
       </TouchableOpacity>
     </View>
   );
