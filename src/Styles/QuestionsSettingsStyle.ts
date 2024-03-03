@@ -38,4 +38,12 @@ export const style = StyleSheet.create({
   btnText: {
     textAlign: "center",
   },
+  SelectTrigger: {
+    width: 300,
+    marginBottom: 150,
+    backgroundColor: "transparent",
+  },
+  SelectInput: {
+    color: "white",
+  },
 });

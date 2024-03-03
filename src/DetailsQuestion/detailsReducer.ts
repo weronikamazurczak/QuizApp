@@ -4,11 +4,14 @@ export function detailsReducer(
     screenNumber: 0,
     numberOfQuestion: 0,
     typeOfQuestion: "multiple",
-    multipleChoiceColor: "red",
-    trueOrFalseChoiceColor: "green",
+    multipleChoiceColor: "#850e9a",
+    trueOrFalseChoiceColor: "#e7510f",
     categoryOfQuestion: 9,
     levelOfQuestion: "easy",
-    
+    easyLevelOfQuestionColor: "#2f6d07",
+    mediumLevelOfQuestionColor: "blue",
+    hardLevelOfQuestionColor: "blue",
+    headerName: "MindQuest",
   },
   action: {
     type: string;
@@ -47,9 +50,9 @@ export function detailsReducer(
         ...state,
         typeOfQuestion: action.newTypeOfQuestion,
         multipleChoiceColor:
-          state.typeOfQuestion == "multiple" ? "green" : "red",
+          state.typeOfQuestion == "multiple" ? "#2f6d07" : "red",
         trueOrFalseChoiceColor:
-          state.typeOfQuestion == "boolean" ? "green" : "red",
+          state.typeOfQuestion == "boolean" ? "#2f6d07" : "red",
       };
     case "selectQuestionCategory":
       return {
@@ -60,6 +63,19 @@ export function detailsReducer(
       return {
         ...state,
         levelOfQuestion: action.newLevelOfQuestion,
+        easyLevelOfQuestionColor:
+          state.levelOfQuestion == "easy" ? "#2f6d07" : "blue",
+        mediumLevelOfQuestionColor:
+          state.levelOfQuestion == "medium" ? "#ffbb00" : "blue",
+        hardLevelOfQuestionColor:
+          state.levelOfQuestion == "hard" ? "#b10303" : "blue",
+      };
+    case "changeContentOfDifficultyOfQuestion":
+      return {
+        ...state,
+        headerName: "Question",
+        informationText: "question",
+        screenNumber: state.screenNumber + 1,
       };
     default:
       return state;

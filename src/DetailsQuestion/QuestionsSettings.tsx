@@ -27,21 +27,50 @@ interface State {
   informationText: string;
   screenNumber: number;
   numberOfQuestion: number;
+  typeOfQuestion: string;
   multipleChoiceColor: string;
   trueOrFalseChoiceColor: string;
+  categoryOfQuestion: number;
+  levelOfQuestion: string;
+  easyLevelOfQuestionColor: string;
+  mediumLevelOfQuestionColor: string;
+  hardLevelOfQuestionColor: string;
 }
 
 export default function QuestionsSettings() {
   const screenNumber = useSelector((state: State) => state.screenNumber);
+
   const informationText = useSelector((state: State) => state.informationText);
+
   const numberOfQuestion = useSelector(
     (state: State) => state.numberOfQuestion
   );
+
+  const typeOfQuestion = useSelector((state: State) => state.typeOfQuestion);
+
   const trueOrFalseChoiceColor = useSelector(
     (state: State) => state.trueOrFalseChoiceColor
   );
   const multipleChoiceColor = useSelector(
     (state: State) => state.multipleChoiceColor
+  );
+
+  const categoryOfQuestion = useSelector(
+    (state: State) => state.categoryOfQuestion
+  );
+
+  const levelOfQuestion = useSelector((state: State) => state.levelOfQuestion);
+
+  const easyLevelOfQuestionColor = useSelector(
+    (state: State) => state.easyLevelOfQuestionColor
+  );
+
+  const mediumLevelOfQuestionColor = useSelector(
+    (state: State) => state.mediumLevelOfQuestionColor
+  );
+
+  const hardLevelOfQuestionColor = useSelector(
+    (state: State) => state.hardLevelOfQuestionColor
   );
 
   const dispatch = useDispatch();
@@ -122,8 +151,12 @@ export default function QuestionsSettings() {
                   });
                 }}
               >
-                <SelectTrigger variant="outline" size="md">
-                  <SelectInput placeholder="Select option" />
+                <SelectTrigger
+                  variant="outline"
+                  size="md"
+                  style={style.SelectTrigger}
+                >
+                  <SelectInput placeholder="Select option" style={style.SelectInput}/>
                 </SelectTrigger>
                 <SelectPortal>
                   <SelectBackdrop />
@@ -184,6 +217,13 @@ export default function QuestionsSettings() {
                 action="primary"
                 isDisabled={false}
                 isFocusVisible={false}
+                onPress={() => {
+                  dispatch({
+                    type: "chooseLevelOfQuestion",
+                    newLevelOfQuestion: "easy",
+                  });
+                }}
+                bgColor={easyLevelOfQuestionColor}
               >
                 <ButtonText>Easy</ButtonText>
               </Button>
@@ -193,6 +233,13 @@ export default function QuestionsSettings() {
                 action="primary"
                 isDisabled={false}
                 isFocusVisible={false}
+                onPress={() => {
+                  dispatch({
+                    type: "chooseLevelOfQuestion",
+                    newLevelOfQuestion: "medium",
+                  });
+                }}
+                bgColor={mediumLevelOfQuestionColor}
               >
                 <ButtonText>Medium</ButtonText>
               </Button>
@@ -202,6 +249,13 @@ export default function QuestionsSettings() {
                 action="primary"
                 isDisabled={false}
                 isFocusVisible={false}
+                onPress={() => {
+                  dispatch({
+                    type: "chooseLevelOfQuestion",
+                    newLevelOfQuestion: "hard",
+                  });
+                }}
+                bgColor={hardLevelOfQuestionColor}
               >
                 <ButtonText>Hard</ButtonText>
               </Button>
@@ -209,41 +263,69 @@ export default function QuestionsSettings() {
           ) : (
             <></>
           )}
-          <Animatable.View
-            animation="pulse"
-            iterationCount="infinite"
-            direction="alternate"
-            style={{ marginBottom: "10%" }}
-          >
-            <Button
-              style={style.btnStyle}
-              variant="solid"
-              action="primary"
-              isDisabled={false}
-              isFocusVisible={false}
-              onPress={() => {
-                switch (screenNumber) {
-                  case 0:
-                    dispatch({
-                      type: "changeContentOfChoosenNumberOfQuestion",
-                    });
-                    break;
-                  case 1:
-                    dispatch({
-                      type: "changeContentOfChoosenTypeOfQuestion",
-                    });
-                    break;
-                  case 2:
-                    dispatch({ type: "changeContentOfSelectCategory" });
-                    break;
-                }
-              }}
+          {screenNumber < 4 ? (
+            <Animatable.View
+              animation="pulse"
+              iterationCount="infinite"
+              direction="alternate"
+              style={{ marginBottom: "10%" }}
             >
-              <ButtonText style={style.btnText}>Next </ButtonText>
-            </Button>
-          </Animatable.View>
+              <Button
+                style={style.btnStyle}
+                variant="solid"
+                action="primary"
+                isDisabled={false}
+                isFocusVisible={false}
+                onPress={async () => {
+                  switch (screenNumber) {
+                    case 0:
+                      dispatch({
+                        type: "changeContentOfChoosenNumberOfQuestion",
+                      });
+                      break;
+                    case 1:
+                      dispatch({
+                        type: "changeContentOfChoosenTypeOfQuestion",
+                      });
+                      break;
+                    case 2:
+                      dispatch({ type: "changeContentOfSelectCategory" });
+                      break;
+                    case 3:
+                      dispatch({
+                        type: "changeContentOfDifficultyOfQuestion",
+                      });
+                      await getQuestions(
+                        numberOfQuestion,
+                        categoryOfQuestion,
+                        levelOfQuestion,
+                        typeOfQuestion
+                      );
+                      break;
+                  }
+                }}
+              >
+                <ButtonText style={style.btnText}>Next </ButtonText>
+              </Button>
+            </Animatable.View>
+          ) : (
+            // wieksze od 4 i tu sie wyswietlaja pytania :D
+            <></>
+          )}
         </GluestackUIProvider>
       </LinearGradient>
     </View>
   );
+}
+
+async function getQuestions(
+  numberOfQuestion: number,
+  categoryOfQuestion: number,
+  levelOfQuestion: string,
+  typeOfQuestion: string
+) {
+  const link = `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=${categoryOfQuestion}&difficulty=${levelOfQuestion}&type=${typeOfQuestion}`;
+  const response = await fetch(link);
+  const questions = await response.json();
+  console.log(questions);
 }

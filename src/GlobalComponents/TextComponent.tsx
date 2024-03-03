@@ -1,9 +1,18 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { style } from "../Styles/QuizNameStyle";
 import { Text, View } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
+import { useSelector } from "react-redux";
+
+interface State{
+  headerName: string,
+}
 
 export const QuizNameText = (): ReactElement<any, any> => {
+const headerName = useSelector ((state:State)=> state.headerName)
+console.log(headerName)
+
+useEffect (()=>{}, [headerName])
   return (
     <>
       <MaskedView
@@ -26,7 +35,7 @@ export const QuizNameText = (): ReactElement<any, any> => {
                 fontFamily: "KeaniaOne-Regular",
               }}
             >
-              MindQuest
+              {headerName}
             </Text>
           </View>
         }
