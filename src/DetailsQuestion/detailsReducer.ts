@@ -12,6 +12,20 @@ export function detailsReducer(
     mediumLevelOfQuestionColor: "blue",
     hardLevelOfQuestionColor: "blue",
     headerName: "MindQuest",
+    arrayQuestions: [
+      {
+        category: "",
+        difficulty: "",
+        incorrect_answers: [""],
+        question: "",
+        type: "",
+        correct_answer: "",
+      },
+    ],
+    arrayAnswers: [""],
+    correctAnswer: "",
+    questionScreenNumber: 0,
+    score: 0,
   },
   action: {
     type: string;
@@ -19,6 +33,17 @@ export function detailsReducer(
     newTypeOfQuestion: string;
     newCategoryOfQuestion: number;
     newLevelOfQuestion: string;
+    newArrayQuestions: Array<{
+      category: string;
+      difficulty: string;
+      incorrect_answers: Array<string>;
+      question: string;
+      type: string;
+    }>;
+    newArrayAnswers: Array<string>;
+    newCorrectAnswer: string;
+    newQuestionScreenNumber: number;
+    answerCheckedByUser: string;
   }
 ) {
   switch (action.type) {
@@ -70,12 +95,35 @@ export function detailsReducer(
         hardLevelOfQuestionColor:
           state.levelOfQuestion == "hard" ? "#b10303" : "blue",
       };
+    case "setQuestionsFromApi":
+      return {
+        ...state,
+        arrayQuestions: action.newArrayQuestions,
+      };
     case "changeContentOfDifficultyOfQuestion":
       return {
         ...state,
         headerName: "Question",
-        informationText: "question",
+        informationText:
+          state.arrayQuestions[state.questionScreenNumber].question,
         screenNumber: state.screenNumber + 1,
+        arrayAnswers:
+          state.arrayQuestions[state.questionScreenNumber].incorrect_answers,
+        correctAnswer:
+          state.arrayQuestions[state.questionScreenNumber].correct_answer,
+        questionScreenNumber: state.questionScreenNumber + 1,
+        score:
+          action.answerCheckedByUser === state.correctAnswer
+            ? state.score + 1
+            : state.score,
+      };
+    case "endAllQuestion":
+      return {
+        ...state,
+        informationText:
+          "Your score" + " " + state.score + "/" + state.numberOfQuestion,
+        arrayAnswers: [""],
+        correctAnswer: "",
       };
     default:
       return state;

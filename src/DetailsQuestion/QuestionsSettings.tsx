@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useEffect } from "react";
 
 import { config } from "@gluestack-ui/config";
@@ -35,6 +35,18 @@ interface State {
   easyLevelOfQuestionColor: string;
   mediumLevelOfQuestionColor: string;
   hardLevelOfQuestionColor: string;
+  headerName: string;
+  arrayQuestions: Array<{
+    category: string;
+    difficulty: string;
+    incorrect_answers: Array<string>;
+    question: string;
+    type: string;
+  }>;
+  arrayAnswers: Array<string>;
+  correctAnswer: string;
+  questionScreenNumber: number;
+  score: number;
 }
 
 export default function QuestionsSettings() {
@@ -73,9 +85,28 @@ export default function QuestionsSettings() {
     (state: State) => state.hardLevelOfQuestionColor
   );
 
+  const headerName = useSelector((state: State) => state.headerName);
+
+  let arrayQuestions = useSelector((state: State) => state.arrayQuestions);
+
+  const arrayAnswers = useSelector((state: State) => state.arrayAnswers);
+
+  const correctAnswer = useSelector((state: State) => state.correctAnswer);
+
+  const questionScreenNumber = useSelector(
+    (state: State) => state.questionScreenNumber
+  );
+
+  const score = useSelector((state: State) => state.score);
+  console.log("to ten wyzszy score xd ", score);
+
   const dispatch = useDispatch();
 
-  useEffect(() => {}, [screenNumber]);
+  const textStyle = screenNumber < 4 ? style.setupQuestion : style.question;
+
+  arrayAnswers.push(correctAnswer);
+
+  useEffect(() => {}, [screenNumber, arrayQuestions]);
 
   return (
     <View style={style.container}>
@@ -84,7 +115,7 @@ export default function QuestionsSettings() {
         style={style.selectArea}
       >
         <GluestackUIProvider config={config}>
-          <Text style={style.setupQuestion}>{informationText}</Text>
+          <Text style={textStyle}>{informationText}</Text>
 
           {screenNumber === 0 ? (
             <>
@@ -156,7 +187,10 @@ export default function QuestionsSettings() {
                   size="md"
                   style={style.SelectTrigger}
                 >
-                  <SelectInput placeholder="Select option" style={style.SelectInput}/>
+                  <SelectInput
+                    placeholder="Select option"
+                    style={style.SelectInput}
+                  />
                 </SelectTrigger>
                 <SelectPortal>
                   <SelectBackdrop />
@@ -292,15 +326,17 @@ export default function QuestionsSettings() {
                       dispatch({ type: "changeContentOfSelectCategory" });
                       break;
                     case 3:
-                      dispatch({
-                        type: "changeContentOfDifficultyOfQuestion",
-                      });
                       await getQuestions(
                         numberOfQuestion,
                         categoryOfQuestion,
                         levelOfQuestion,
-                        typeOfQuestion
+                        typeOfQuestion,
+                        dispatch
                       );
+                      dispatch({
+                        type: "changeContentOfDifficultyOfQuestion",
+                      });
+
                       break;
                   }
                 }}
@@ -309,8 +345,42 @@ export default function QuestionsSettings() {
               </Button>
             </Animatable.View>
           ) : (
-            // wieksze od 4 i tu sie wyswietlaja pytania :D
-            <></>
+            <>
+              <View style={{ flex: 1 }}>
+                <View>
+                  {arrayAnswers.map((answer: string, index: number) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => {
+                        console.log(answer === correctAnswer);
+
+                        questionScreenNumber < numberOfQuestion
+                          ? dispatch({
+                              type: "changeContentOfDifficultyOfQuestion",
+                              answerCheckedByUser: answer,
+                            })
+                          : dispatch({
+                              type: "endAllQuestion",
+                            });
+                      }}
+                    >
+                      <View style={{ marginBottom: 10 }}>
+                        <Text>{answer}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  ))}
+
+                  {score / numberOfQuestion >= 0.8 &&
+                  questionScreenNumber >= numberOfQuestion ? (
+                    <Text> YOU WIN </Text>
+                  ) : questionScreenNumber >= numberOfQuestion ? (
+                    <Text>TRY AGAIN</Text>
+                  ) : (
+                    <></>
+                  )}
+                </View>
+              </View>
+            </>
           )}
         </GluestackUIProvider>
       </LinearGradient>
@@ -322,10 +392,16 @@ async function getQuestions(
   numberOfQuestion: number,
   categoryOfQuestion: number,
   levelOfQuestion: string,
-  typeOfQuestion: string
+  typeOfQuestion: string,
+  dispatch: any
 ) {
   const link = `https://opentdb.com/api.php?amount=${numberOfQuestion}&category=${categoryOfQuestion}&difficulty=${levelOfQuestion}&type=${typeOfQuestion}`;
   const response = await fetch(link);
   const questions = await response.json();
-  console.log(questions);
+
+  console.log(link);
+  dispatch({
+    type: "setQuestionsFromApi",
+    newArrayQuestions: questions.results,
+  });
 }
