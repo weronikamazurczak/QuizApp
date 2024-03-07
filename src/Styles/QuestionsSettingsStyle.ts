@@ -46,4 +46,13 @@ export const style = StyleSheet.create({
   SelectInput: {
     color: "white",
   },
+  question:{
+    fontSize: 30,
+    color: "white",
+    alignItems: "center",
+    textAlign: "center",
+    marginTop: "15%",
+    padding: 10,
+    fontFamily: "libre-bodoni.regular",
+  }
 });

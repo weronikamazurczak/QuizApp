@@ -1,48 +1,42 @@
 import { ReactElement, useEffect } from "react";
-import { style } from "../Styles/QuizNameStyle";
 import { Text, View } from "react-native";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { useSelector } from "react-redux";
+import { style } from "../Styles/TextComponentStyle";
 
-interface State{
-  headerName: string,
+interface State {
+  headerName: string;
+  screenNumber: number;
+  questionScreenNumber: number;
 }
 
 export const QuizNameText = (): ReactElement<any, any> => {
-const headerName = useSelector ((state:State)=> state.headerName)
-console.log(headerName)
+  const headerName = useSelector((state: State) => state.headerName);
 
-useEffect (()=>{}, [headerName])
+  const screenNumber = useSelector((state: State) => state.screenNumber);
+
+  const questionScreenNumber = useSelector(
+    (state: State) => state.questionScreenNumber
+  );
+
+  useEffect(() => {}, [headerName, questionScreenNumber]);
   return (
     <>
       <MaskedView
-        style={{ flex: 1, flexDirection: "row" }}
+        style={style.container}
         maskElement={
-          <View
-            style={{
-              backgroundColor: "transparent",
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "20%",
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 60,
-                color: "black",
-                fontWeight: "bold",
-                fontFamily: "KeaniaOne-Regular",
-              }}
-            >
-              {headerName}
+          <View style={style.backgroundColor}>
+            <Text style={style.headerText}>
+              {screenNumber < 4
+                ? headerName
+                : headerName + " " + questionScreenNumber}
             </Text>
           </View>
         }
       >
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#FF8E3A" }} />
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#ED509E" }} />
-        <View style={{ flex: 1, height: "100%", backgroundColor: "#9C73F8" }} />
+        <View style={style.colorView1} />
+        <View style={style.colorView2} />
+        <View style={style.colorView3} />
       </MaskedView>
     </>
   );
