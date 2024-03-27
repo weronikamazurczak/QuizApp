@@ -28,7 +28,7 @@ QuizApp uses the Open Trivia Database (OpenTDB) API to fetch quiz questions. Ope
 
 The API endpoint used in this project is: `https://opentdb.com/api.php`
 
-For more information about the API and its usage, visit [OpenTDB API Config](https://opentdb.com/api_config.php).
+For more information about the API and its usage, visit [OpenTDB API Config]([`https://opentdb.com/api_config.php](https://opentdb.com/api.php?amount=${numberOfQuestion}&category=${categoryOfQuestion}&difficulty=${levelOfQuestion}&type=${typeOfQuestion}`)).
 
 ## ©️ License
 This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) for more details.
