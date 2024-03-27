@@ -98,7 +98,6 @@ export default function QuestionsSettings() {
   );
 
   const score = useSelector((state: State) => state.score);
-  console.log("to ten wyzszy score xd ", score);
 
   const dispatch = useDispatch();
 
@@ -189,6 +188,7 @@ export default function QuestionsSettings() {
                 >
                   <SelectInput
                     placeholder="Select option"
+                    placeholderTextColor="white"
                     style={style.SelectInput}
                   />
                 </SelectTrigger>
@@ -336,7 +336,6 @@ export default function QuestionsSettings() {
                       dispatch({
                         type: "changeContentOfDifficultyOfQuestion",
                       });
-
                       break;
                   }
                 }}
@@ -365,19 +364,10 @@ export default function QuestionsSettings() {
                       }}
                     >
                       <View style={{ marginBottom: 10 }}>
-                        <Text>{answer}</Text>
+                        <Text style={style.answerStyle}>{answer}</Text>
                       </View>
                     </TouchableOpacity>
                   ))}
-
-                  {score / numberOfQuestion >= 0.8 &&
-                  questionScreenNumber >= numberOfQuestion ? (
-                    <Text> YOU WIN </Text>
-                  ) : questionScreenNumber >= numberOfQuestion ? (
-                    <Text>TRY AGAIN</Text>
-                  ) : (
-                    <></>
-                  )}
                 </View>
               </View>
             </>

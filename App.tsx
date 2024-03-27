@@ -4,7 +4,6 @@ import SplashScreen from "./src/SplashScreen/SplashScreen";
 import StartScreen from "./src/StartScreen/StartScreen";
 import DetailsQuestion from "./src/DetailsQuestion/DetailsQuestion";
 import QuestionScreen from "./src/QuestionScreen/QuestionScreen";
-import FinishQuiz from "./src/FinishQuiz/FinishQuiz";
 import React from "react";
 const Stack = createNativeStackNavigator();
 
@@ -16,7 +15,6 @@ export default function App() {
         <Stack.Screen name="StartScreen" component={StartScreen} />
         <Stack.Screen name="DetailsQuestion" component={DetailsQuestion} />
         <Stack.Screen name="QuestionScreen" component={QuestionScreen} />
-        <Stack.Screen name="FinishQuiz" component={FinishQuiz} />
       </Stack.Navigator>
     </NavigationContainer>
   );

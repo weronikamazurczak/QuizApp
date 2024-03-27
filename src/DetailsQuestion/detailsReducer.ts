@@ -4,8 +4,8 @@ export function detailsReducer(
     screenNumber: 0,
     numberOfQuestion: 0,
     typeOfQuestion: "multiple",
-    multipleChoiceColor: "#850e9a",
-    trueOrFalseChoiceColor: "#e7510f",
+    multipleChoiceColor: "blue",
+    trueOrFalseChoiceColor: "blue",
     categoryOfQuestion: 9,
     levelOfQuestion: "easy",
     easyLevelOfQuestionColor: "#2f6d07",
@@ -75,9 +75,9 @@ export function detailsReducer(
         ...state,
         typeOfQuestion: action.newTypeOfQuestion,
         multipleChoiceColor:
-          state.typeOfQuestion == "multiple" ? "#2f6d07" : "red",
+          state.typeOfQuestion == "multiple" ? "#850e9a" : "blue",
         trueOrFalseChoiceColor:
-          state.typeOfQuestion == "boolean" ? "#2f6d07" : "red",
+          state.typeOfQuestion == "boolean" ? "#e7510f" : "blue",
       };
     case "selectQuestionCategory":
       return {
@@ -118,12 +118,21 @@ export function detailsReducer(
             : state.score,
       };
     case "endAllQuestion":
+      let scorePercentage = (state.score / state.numberOfQuestion) * 100;
+      let scoreText =
+        "Your score" + " " + state.score + "/" + state.numberOfQuestion;
       return {
         ...state,
+        headerName: "Finish",
         informationText:
-          "Your score" + " " + state.score + "/" + state.numberOfQuestion,
+          (scorePercentage >= 80 ? "YOU WIN" : "YOU LOSE") +
+          ". " +
+          "\n" +
+          "\n" +
+          scoreText,
         arrayAnswers: [""],
         correctAnswer: "",
+        questionScreenNumber: "",
       };
     default:
       return state;

@@ -13,13 +13,13 @@ export const style = StyleSheet.create({
     justifyContent: "space-between",
   },
   setupQuestion: {
+    fontFamily: "SauceTomato",
     fontSize: 40,
     color: "white",
     alignItems: "center",
     textAlign: "center",
     marginTop: "15%",
     padding: 10,
-    fontFamily: "libre-bodoni.regular",
   },
   slider: {
     marginTop: "10%",
@@ -28,31 +28,48 @@ export const style = StyleSheet.create({
     marginBottom: 50,
   },
   valueText: {
-    fontSize: 80,
+    fontFamily: "SauceTomato",
+    fontSize: 50,
     color: "white",
-    paddingBottom: 100,
   },
   btnStyle: {
     width: 150,
   },
   btnText: {
+    fontFamily: "SauceTomato",
+    paddingTop: "20%",
+    fontSize: 20,
     textAlign: "center",
   },
+
   SelectTrigger: {
     width: 300,
     marginBottom: 150,
     backgroundColor: "transparent",
+    borderColor: "white",
+    borderWidth: 3,
   },
   SelectInput: {
     color: "white",
+    fontSize: 20,
   },
-  question:{
-    fontSize: 30,
+  question: {
+    fontSize: 22,
     color: "white",
     alignItems: "center",
     textAlign: "center",
-    marginTop: "15%",
-    padding: 10,
-    fontFamily: "libre-bodoni.regular",
-  }
+    marginTop: "10%",
+    fontFamily: "SauceTomato",
+    paddingBottom: "10%",
+    paddingLeft: "3%",
+    paddingRight: "3%",
+  },
+
+  answerStyle: {
+    fontFamily: "SauceTomato",
+    fontSize: 15,
+    alignItems: "center",
+    textAlign: "center",
+    color: "#2d1996",
+  },
 });

@@ -29,7 +29,7 @@ export const QuizNameText = (): ReactElement<any, any> => {
             <Text style={style.headerText}>
               {screenNumber < 4
                 ? headerName
-                : headerName + " " + questionScreenNumber}
+                : headerName + " " + questionScreenNumber} 
             </Text>
           </View>
         }
