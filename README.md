@@ -26,9 +26,8 @@ This use of Redux allows us to maintain a consistent state across the applicatio
 
 QuizApp uses the Open Trivia Database (OpenTDB) API to fetch quiz questions. OpenTDB is a free-to-use database of trivia questions. It provides a simple API that allows us to fetch questions based on various parameters like category, difficulty, type, etc.
 
-The API endpoint used in this project is: `https://opentdb.com/api.php`
 
-For more information about the API and its usage, visit [OpenTDB API Config]([`https://opentdb.com/api_config.php](https://opentdb.com/api.php?amount=${numberOfQuestion}&category=${categoryOfQuestion}&difficulty=${levelOfQuestion}&type=${typeOfQuestion}`)).
+For more information about the API and its usage, visit [OpenTDB API Config]([https://opentdb.com/api_config.php](https://opentdb.com/api_config.php).
 
 ## ©️ License
 This project is licensed under the terms of the MIT license. See [LICENSE](LICENSE) for more details.
