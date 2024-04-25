@@ -6,7 +6,6 @@ QuizApp is a simple, interactive, and educational application designed to test y
 
 ## 🔥 Features
 - Multiple choice questions
-- Timer for each question
 - Score tracking
 - Variety of topics
 
